@@ -10,11 +10,13 @@ function palindrom(myStr) {
         return true;
     }
 
-    let count;
-    if (n%2 == 1) {
-        count = (n - 1) / 2;
-    }
-    else count = n / 2;
+    // let count;
+    // if (n%2 == 1) {
+    //     count = (n - 1) / 2;
+    // }
+    // else count = n / 2;
+    let count = (n%2) ? n/2 : (n-1) / 2;
+    // let count = Math.trunc(n/2);
 
     for (let i = 0; i < count; i++) {
         if (myStr[i] !== myStr[n - i - 1]) { // abcddcba
