@@ -32,9 +32,29 @@
               type="text"
               id="inputText"
             />
+            <input
+              class="py-2 form-control"
+              placeholder="search"
+              type="text"
+              id="search"
+            />
           </div>
           <div class="col-2">
             <button id="add-btn" class="btn btn-dark">Add</button>
+          </div>
+          <div class="col-2">
+            <select class="form-select" name="sort" id="select">
+              <option disabled selected value="0">Сортировка</option>
+              <option value="1">Default</option>
+              <option value="2">По алфавиту</option>
+              <option value="3">По длине</option>
+            </select>
+            <select class="form-select" name="sort" id="select2">
+              <option disabled selected value="0">Фильтрация</option>
+              <option selected value="1">Default</option>
+              <option value="2">Done</option>
+              <option value="3">Not done</option>
+            </select>
           </div>
         </div>
       </div>

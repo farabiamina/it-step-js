@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+}
+
+p {
+    color: red;
+}
+
+#area {
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgb(255, 0, 0);
+    box-shadow: 0 0 11px 3px red;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cell {
+    width: 98px;
+    height: 98px;
+    border: 1px solid red;
+    display: inline-flex;
+    color: red;
+    justify-content: center;
+    align-items: center;
+}
+
+table, td {
+    border: 1px solid red;
+    color: red;
+}

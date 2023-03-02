@@ -1,22 +1,32 @@
 let input = document.getElementById("inputText");
 let list = document.getElementById("list");
 
+let search = document.getElementById("search");
+search.addEventListener('input', searching);
+
 let addBtn = document.getElementById("add-btn");
 addBtn.addEventListener("click", add);
+
+let select = document.getElementById("select");
+select.addEventListener("change", sorting);
+
+let filterSelect = document.getElementById("select2");
+filterSelect.addEventListener("change", filtering);
 
 let todoList = [
   //   { id: 1, text: "task1", checked: false },
   //   { id: 2, text: "task2", checked: true },
   //   { id: 3, text: "task3", checked: false },
 ];
+
 // updateTodo();
 if (localStorage.getItem('todoList')) {
     todoList = JSON.parse(localStorage.getItem('todoList'));
     updateTodo();
 }
-function updateTodo() {
+function updateTodo(arr = todoList) {
   let todoHTML = "";
-    todoList.forEach((elem) => {
+    arr.forEach((elem) => {
       todoHTML += `<li class="my-2 py-3 list-group-item" id="list">
         <div class="row">
           <div class="col-1">
@@ -80,5 +90,41 @@ function check(taskId) {
     updateTodo();
     // (checkTask.checked) ? false : true;
 }
+
+function sorting(event) {
+  console.log(event.target.value);
+  if (event.target.value === '2') {
+    updateTodo([...todoList].sort((a, b) => a.text.localeCompare(b.text)));
+     // [...] spread operator
+  }
+  else if (event.target.value === '3') {
+    updateTodo([...todoList].sort((a, b) => a.text.length - b.text.length));
+     // [...] spread operator
+  }
+  else {
+    updateTodo();
+  }
+}
+
+function filtering(event) {
+  if (event.target.value === '2') {
+    updateTodo([...todoList].filter(elem => elem.checked === true));
+     // [...] spread operator
+  }
+  else if (event.target.value === '3') {
+    updateTodo([...todoList].filter(elem => elem.checked === false));
+     // [...] spread operator
+  }
+  else {
+    updateTodo();
+  }
+}
+
+function searching() {
+  console.log(search.value);
+  updateTodo([...todoList].filter(elem => elem.text.includes(search.value)));
+}
+
+
 
 
