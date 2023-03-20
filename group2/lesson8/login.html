@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        form {
+            border: 1px solid rgb(215, 215, 215);
+            width: 400px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+        }
+        form > * {
+            margin: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form name="login">
+        <h3 style="text-align: center;">Войдите в свой аккаунт</h3>
+        <input placeholder="username" type="text" name="username" required>
+        <input placeholder="password" type="password" name="password" required>
+        <button id='log-btn' type="submit">Войти</button>
+    </form>
+    <script type="module" src="login.js"></script>
+</body>
+</html>
