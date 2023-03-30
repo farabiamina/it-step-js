@@ -30,14 +30,14 @@ async function login(e) {
     let username = form.elements.username.value;
     let password = form.elements.password.value;
 
-    const response = await fetch('https://6412dad8b1ea7443031af7f2.mockapi.io/users');
+    const response = await fetch('https://crudcrud.com/api/ef336479fe8c42518b2f4332d788fafc/users');
     const users = await response.json();
-    console.log(users);
+    // console.log(users);
 
     let findUser = false;
     for (let user of users) {
-        console.log(user.username, username);
-        console.log(user.password, password);
+        // console.log(user.username, username);
+        // console.log(user.password, password);
         if (user.username === username && user.password === password) {
            myUser = user;
            findUser = true;

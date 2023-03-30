@@ -32,7 +32,7 @@ async function register(e) {
     let username = form.elements.username.value;
     let password = form.elements.password.value;
 
-    const response = await fetch('https://crudcrud.com/api/8b3d9ba32c0c4dbe8d766b56f9766f33/users', {
+    const response = await fetch('https://crudcrud.com/api/ef336479fe8c42518b2f4332d788fafc/users', {
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
@@ -41,15 +41,13 @@ async function register(e) {
     });
     const user = await response.json();
     setCookie('user_id', user._id, 30);
-    console.log(user);
+    // console.log(user);
     window.location = 'http://127.0.0.1:8080/home.html';
 }
 
 window.addEventListener('DOMContentLoaded', checkAuth);
 
 function checkAuth() {
-    console.log('h');
-
     if (getCookie("user_id") !== "") {
         window.location = 'http://127.0.0.1:8080/home.html';
     }
