@@ -1,38 +1,54 @@
-// Cookie 
+let registerBtn = document.getElementById('reg-btn');
+registerBtn.addEventListener('click', register);
+
 function setCookie(cookieName, cookieValue, exdays) {
     const date = new Date();
-    date.setTime(date.getTime() + (exdays*24*60*60*1000));
-    let expires = 'expires='+date.toUTCString();
-    document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path='/'";
+    date.setTime(date.getTime() + (exdays * 24 * 60 * 60 *1000));
+    let expires = "expires=" + date.toUTCString();
+    document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
 }
 
-// document.cookie = "user_id=123;expires=Thu, 01 Jan 2000 00:00:00 UTC; path=/;"
+function getCookie(cookieName) {
+    let name = cookieName + "=";
+    let cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i];
+        while (cookie.charAt(0) == " ") {
+            cookie = cookie.substring(1);
+        }
+        if (cookie.indexOf(name) == 0) {
+            return cookie.substring(name.length, cookie.length);
+        }
+    }
+    return "";
+}
 
-//  Registration
-let regBtn = document.getElementById('reg-btn');
-regBtn.addEventListener('click', register);
+// name=John;expires=Thu, 01 Jan 2023 00:00:00; path=/;
 
 async function register(e) {
     e.preventDefault();
-    let registrationForm = document.forms.register;
-    let email = registrationForm.elements.email.value;
-    let username = registrationForm.elements.username.value;
-    let password = registrationForm.elements.password.value;
-    // console.log(email, password);
-    const response = await fetch('https://crudcrud.com/api/2c82c88eacc34781b7b00887f193ec96/customers', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({email: email, username: username, password: password}),
-        }
-    )
-    if (response.status === 201) {
-        const user = await response.json();
-        setCookie("user_id", user._id, 30);
-        window.location = "http://127.0.0.1:8080/home.html";
-    }
-    else {
-        console.log("Не получилось создать пользователя");
+    let form = document.forms.register;
+    let email = form.elements.email.value;
+    let username = form.elements.username.value;
+    let password = form.elements.password.value;
+
+    const response = await fetch('https://crudcrud.com/api/ce1e6a3c223249dcac749d2f21743b71/users', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        body: JSON.stringify({email: email, username: username, password: password}),
+    });
+    const user = await response.json();
+    setCookie('user_id', user._id, 30);
+    // console.log(user);
+    window.location = 'http://127.0.0.1:8080/home.html';
+}
+
+window.addEventListener('DOMContentLoaded', checkAuth);
+
+function checkAuth() {
+    if (getCookie("user_id") !== "") {
+        window.location = 'http://127.0.0.1:8080/home.html';
     }
 }

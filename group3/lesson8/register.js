@@ -32,7 +32,7 @@ async function register(e) {
     let username = form.elements.username.value;
     let password = form.elements.password.value;
 
-    const response = await fetch('https://crudcrud.com/api/ef336479fe8c42518b2f4332d788fafc/users', {
+    const response = await fetch('https://crudcrud.com/api/ce1e6a3c223249dcac749d2f21743b71/users', {
         method: 'POST',
         headers: {
             'Content-type': 'application/json',

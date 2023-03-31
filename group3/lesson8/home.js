@@ -44,7 +44,7 @@ let user = null;
 
 async function getUser() {
     // const response = await fetch(`https://crudcrud.com/api/8b3d9ba32c0c4dbe8d766b56f9766f33/users/${userId}`);
-    const response = await fetch(`https://crudcrud.com/api/ef336479fe8c42518b2f4332d788fafc/users/${userId}`);
+    const response = await fetch(`https://crudcrud.com/api/ce1e6a3c223249dcac749d2f21743b71/users/${userId}`);
     user = await response.json();
     usernameSpan.innerHTML = user.username;
     return user;
@@ -55,27 +55,46 @@ function logout() {
     window.location = 'http://127.0.0.1:8080/register.html';
 }
 
+// fetch(url, configObj)
+
 async function deleteUser() {
-    const response = await fetch(`https://crudcrud.com/api/ef336479fe8c42518b2f4332d788fafc/users/${userId}`, {
+    const config = {
         method: "DELETE",
-    });
-    const data = response.json();
-    console.log(data);
+    }
+    fetch(`https://crudcrud.com/api/ce1e6a3c223249dcac749d2f21743b71/users/${userId}`, config);
+    // const data = await response.json();
+    // console.log(data);
     logout();
 }
 
 async function updateUsername() {
     let newUsername = prompt('Введите новое имя пользователя');
-    const response = await fetch(`https://crudcrud.com/api/ef336479fe8c42518b2f4332d788fafc/users/${userId}`, {
-        method: "PUT",
+    const currentUser = getUser();
+
+    // let arr1 = [1,2,3,4];
+    // let arr2 = [...arr1];
+
+    // let updatedUser = {
+    //     ...currentUser,
+    //     username: newUsername,
+    // };
+    let updatedUser = {
+        email: "test@mail.ru",
+        username: newUsername,
+        password: "123",
+    };
+    let updatedUsernameObject = {username: newUsername};
+    const config = { // ...config = 
+        method: 'PATCH', // 'PATCH'
         headers: {
-            "Content-type": "Application/json",
+            'Content-type': 'application/json',
         },
-        body: JSON.stringify({username: newUsername, email: user.email, password: user.password}),
-    });
-    // const data = response.json();
-    // console.log(data);
-    usernameSpan.innerHTML = user.username;
+        body: JSON.stringify(updatedUser),
+    };
+    const response = await fetch(`https://crudcrud.com/api/ce1e6a3c223249dcac749d2f21743b71/users/${userId}`, config);
+    updatedUser = await response.json();
+    usernameSpan.innerHTML = updatedUser.username;
+    // console.log();
 }
 
 // PUT - требует в body все поля, если указываем не все поля, остальные удалятся

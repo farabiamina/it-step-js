@@ -58,6 +58,25 @@ function add() {
     text: input.value,
     checked: false,
   };
+  // const response = fetch('url/todo', {
+  //   method: 'POST',
+  //   headers: {
+  //     'content-type': 'application/json',
+  //   },
+  //   body: JSON.stringify({newTodo})
+  // })
+
+  // {text: "", checked: ""}
+
+  /*
+    {
+      newTodo: {
+        text: "",
+        checked: false
+      }
+    }
+  */
+
   todoList.push(newTodo);
   input.value = "";
   renderTodo();
