@@ -8,35 +8,27 @@ let filSelect = document.getElementById("filter");
 sortSelect.addEventListener("change", sorting);
 filSelect.addEventListener("change", filtering);
 
-
-let todoList = [
-  // {id: 1, text: 'task1', checked: false},
-  // {id: 2, text: 'task2', checked: true},
-  // {id: 3, text: 'task3', checked: false},
-];
+let todoList = [];
 
 async function getTodo() {
-  //  GET todos
-  // todoList = data... get url/todos []
+  const response = await fetch(
+    "https://crudcrud.com/api/23048e78bb104084a19a547cd929c891/todos2"
+  );
+  todoList = await response.json();
+  renderTodo();
 }
 
-// if (localStorage.getItem("todolist2")) {
-//   todoList = JSON.parse(localStorage.getItem("todolist2"));
-//   renderTodo();
-// }
+getTodo();
 
-renderTodo();
-
-// renderTodo();
 function renderTodo(arr = todoList) {
   let tasks = "";
   arr.forEach((elem) => {
     tasks += `<li class="my-2 py-3 list-group-item" id="list">
         <div class="row">
           <div class="col-1">
-            <input onchange="check(${
-              elem.id
-            })" class="" type="checkbox" id="check" ${
+            <input onchange="check('${
+              elem._id
+            }')" class="" type="checkbox" id="check" ${
       elem.checked ? "checked" : ""
     }/>
           </div>
@@ -44,53 +36,80 @@ function renderTodo(arr = todoList) {
             <span class="h5" id="text">${elem.text}</span>
           </div>
           <div class="col-4">
-            <button onclick="del(${
-              elem.id
-            })" class="btn btn-dark">Delete</button>
-            <button onclick="edit(${
-              elem.id
-            })" class="btn btn-dark">Edit</button>
+            <button onclick="del('${
+              elem._id
+            }')" class="btn btn-dark">Delete</button>
+            <button onclick="edit('${
+              elem._id
+            }')" class="btn btn-dark">Edit</button>
           </div>
         </div>
       </li>`;
   });
   list.innerHTML = tasks;
-  // localStorage.setItem("todolist2", JSON.stringify(todoList));
 }
 
 addBtn.addEventListener("click", add);
 
-function add() {
+async function add() {
   let newTodo = {
-    // id: Date.now(),
     text: input.value,
     checked: false,
   };
-  todoList.push(newTodo);
-  // Create request
+  await fetch("https://crudcrud.com/api/23048e78bb104084a19a547cd929c891/todos2", {
+    headers: {"Content-type": "Application/json"},
+    method: "POST",
+    body: JSON.stringify(newTodo),
+  });
   input.value = "";
-  renderTodo();
+  getTodo();
 }
 
-function del(taskId) {
-  todoList = todoList.filter((elem) => elem.id !== taskId);
-  renderTodo();
+async function del(taskId) {
+  await fetch(`https://crudcrud.com/api/23048e78bb104084a19a547cd929c891/todos2/${taskId}`, {
+    method: "DELETE",
+  });
+  getTodo();
 }
 
-function edit(taskId) {
-  let newText = prompt("Введите новый текст");
-  let editTask = todoList.filter((elem) => elem.id === taskId)[0]; // [{}][0]
-  if (editTask.text === newText) {
-    return;
+async function edit(taskId) {
+  let updatedText = prompt("Enter new text");
+  const response = await fetch(
+    "https://crudcrud.com/api/23048e78bb104084a19a547cd929c891/todos2"
+  );
+  const oldTodo = await response.json(); // {text: "", checked: false}
+  let updatedTodo = {
+    ...oldTodo,
+    text: updatedText,
   }
-  editTask.text = newText;
-  renderTodo();
+  await fetch(`https://crudcrud.com/api/23048e78bb104084a19a547cd929c891/todos2/${taskId}`, {
+    headers: {"Content-type": "Application/json"},
+    method: "PUT",
+    body: JSON.stringify(updatedTodo),
+  });
+  getTodo();
 }
 
-function check(taskId) {
-  let checkTask = todoList.filter((elem) => elem.id === taskId)[0]; // [{}][0]
-  checkTask.checked = !checkTask.checked;
-  renderTodo();
+async function check(taskId) {
+  const response = await fetch(
+    `https://crudcrud.com/api/23048e78bb104084a19a547cd929c891/todos2/${taskId}`
+  );
+  const oldTodo = await response.json(); // {text: "", checked: false} !false
+  let updatedChecked = !oldTodo.checked;
+  console.log("old");
+  console.log(oldTodo);
+  let updatedTodo = {
+    ...oldTodo,
+    checked: updatedChecked,
+  }
+  console.log("up");
+  console.log(updatedTodo);
+  await fetch(`https://crudcrud.com/api/23048e78bb104084a19a547cd929c891/todos2/${taskId}`, {
+    headers: {"Content-type": "Application/json"},
+    method: "PUT",
+    body: JSON.stringify(updatedTodo),
+  });
+  getTodo();
 }
 
 function sorting(event) {

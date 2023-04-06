@@ -70,7 +70,6 @@ async function deleteUser() {
 async function updateUsername() {
     let newUsername = prompt('Введите новое имя пользователя');
     const currentUser = getUser();
-
     // let arr1 = [1,2,3,4];
     // let arr2 = [...arr1];
 
@@ -79,13 +78,12 @@ async function updateUsername() {
     //     username: newUsername,
     // };
     let updatedUser = {
-        email: "test@mail.ru",
+        ...currentUser,
         username: newUsername,
-        password: "123",
     };
-    let updatedUsernameObject = {username: newUsername};
+    // let updatedUsernameObject = {username: newUsername};
     const config = { // ...config = 
-        method: 'PATCH', // 'PATCH'
+        method: 'PUT', // 'PATCH'
         headers: {
             'Content-type': 'application/json',
         },
