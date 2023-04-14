@@ -20,7 +20,7 @@ const options = {
   size: 4,
   speed: 2,
   radius: 4,
-  quantity: 50,
+  quantity: 100,
   distance: 120,
   lineWidth: 1,
   lifeSpan: 5,
