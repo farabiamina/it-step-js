@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Добавление и удаление картинок</title>
+</head>
+<body>
+	<button onclick="addImage()">Добавить</button>
+	<button onclick="removeImage()">Удалить</button>
+	<button onclick="clearImages()">Очистить</button>
+
+	<div id="image-container"></div>
+
+	<script>
+		function addImage() {
+			const img = document.createElement("img");
+			img.src = "https://www.meme-arsenal.com/memes/67f848ce35cf1e76f8fea370eca3306c.jpg"; 
+			document.getElementById("image-container").appendChild(img);
+		}
+
+		function removeImage() {
+			const images = document.getElementById("image-container").getElementsByTagName("img");
+			if (images.length > 0) {
+				document.getElementById("image-container").removeChild(images[images.length-1]);
+			}
+		}
+
+		function clearImages() {
+			document.getElementById("image-container").innerHTML = "";
+		}
+	</script>
+</body>
+</html>
